@@ -89,6 +89,10 @@
           <span class="stat-label">Refresh</span>
           <button id="refreshBtn" class="primary-button" style="margin-top: 10px;">Reload data</button>
         </div>
+        <div class="stat-card">
+          <span class="stat-label">Access</span>
+          <button id="logoutBtn" class="secondary-button" style="margin-top: 10px;">Log out</button>
+        </div>
       </div>
     </header>
 
@@ -100,8 +104,10 @@
     const summaryRow = document.getElementById('summaryRow');
     const adminGrid = document.getElementById('adminGrid');
     const refreshBtn = document.getElementById('refreshBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
 
     refreshBtn.addEventListener('click', loadOverview);
+    logoutBtn.addEventListener('click', logout);
     loadOverview();
 
     async function loadOverview() {
@@ -113,6 +119,10 @@
         const data = await response.json();
 
         if (!response.ok) {
+          if (response.status === 401) {
+            window.location.href = '/admin';
+            return;
+          }
           throw new Error(data.error || 'Failed to load admin overview');
         }
 
@@ -121,6 +131,11 @@
       } catch (error) {
         adminGrid.innerHTML = '<div class="admin-card">Unable to load admin data.</div>';
       }
+    }
+
+    async function logout() {
+      await fetch('/api/admin/logout', { method: 'POST' });
+      window.location.href = '/admin';
     }
 
     function renderSummary(data) {

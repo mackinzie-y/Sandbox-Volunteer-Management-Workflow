@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RiseUp PH Admin Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .login-shell {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .login-card {
+      width: min(460px, 100%);
+      border-radius: 26px;
+      padding: 28px;
+      background: rgba(255, 252, 247, 0.94);
+      border: 1px solid rgba(31, 42, 31, 0.12);
+      box-shadow: 0 24px 60px rgba(54, 48, 31, 0.12);
+    }
+
+    .login-card h1 {
+      margin: 0 0 8px;
+    }
+
+    .login-card p {
+      margin: 0 0 18px;
+      color: #5b665b;
+    }
+
+    .login-error {
+      margin-top: 14px;
+      color: #9e2f2f;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-shell">
+    <div class="login-card">
+      <p class="eyebrow">RiseUp PH</p>
+      <h1>Admin access</h1>
+      <p>Enter the admin password to open the dashboard.</p>
+      <form id="loginForm" class="stack">
+        <label class="field-shell">
+          <span class="field-label">Password</span>
+          <input id="password" type="password" placeholder="Enter admin password" required>
+        </label>
+        <button class="primary-button" type="submit">Open dashboard</button>
+      </form>
+      <p id="errorMessage" class="login-error"></p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const passwordInput = document.getElementById('password');
+    const errorMessage = document.getElementById('errorMessage');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      errorMessage.textContent = '';
+
+      const response = await fetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: passwordInput.value })
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        errorMessage.textContent = data.error || 'Unable to sign in.';
+        return;
+      }
+
+      window.location.href = '/admin';
+    });
+  </script>
+</body>
+</html>

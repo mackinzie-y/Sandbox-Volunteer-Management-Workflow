@@ -97,6 +97,7 @@ If `OPENAI_API_KEY` is missing, the app falls back to deterministic local logic 
 1. Install Node.js 18+.
 2. Run `npm install`.
 3. Copy `.env.example` to `.env` and set:
+   - `ADMIN_PASSWORD`
    - `OPENAI_API_KEY`
    - `FIREBASE_PROJECT_ID`
    - `FIREBASE_CLIENT_EMAIL`
@@ -110,3 +111,4 @@ If `OPENAI_API_KEY` is missing, the app falls back to deterministic local logic 
 - Firestore is used when Firebase Admin credentials are available and `firebase-admin` is installed.
 - Without Firebase credentials, the app stores data in `database.json` so the demo remains functional.
 - The frontend uses React via CDN to keep the MVP setup simple and avoid a bundler.
+- The admin dashboard at `/admin` is protected by a password cookie flow backed by `ADMIN_PASSWORD`.

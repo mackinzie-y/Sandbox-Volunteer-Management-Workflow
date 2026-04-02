@@ -8,6 +8,8 @@ loadEnvFile();
 const app = express();
 const PORT = process.env.PORT || 3001;
 const dbFilePath = path.join(__dirname, 'database.json');
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'riseupph-admin';
+const ADMIN_SESSION_COOKIE = 'riseup_admin_session';
 
 const SAMPLE_EVENTS = [
   {
@@ -59,7 +61,6 @@ const SAMPLE_EVENTS = [
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, '/')));
 
 function loadEnvFile() {
   const envPath = path.join(__dirname, '.env');
@@ -129,6 +130,30 @@ function writeLocalDb(data) {
 
 function createId(prefix) {
   return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+}
+
+function parseCookies(req) {
+  const header = req.headers.cookie || '';
+  return header.split(';').reduce((cookies, part) => {
+    const [rawKey, ...rest] = part.trim().split('=');
+    if (!rawKey) {
+      return cookies;
+    }
+    cookies[rawKey] = decodeURIComponent(rest.join('='));
+    return cookies;
+  }, {});
+}
+
+function isAdminAuthenticated(req) {
+  const cookies = parseCookies(req);
+  return cookies[ADMIN_SESSION_COOKIE] === ADMIN_PASSWORD;
+}
+
+function requireAdminAuth(req, res, next) {
+  if (isAdminAuthenticated(req)) {
+    return next();
+  }
+  return res.status(401).json({ error: 'Admin authentication required' });
 }
 
 function normalizeText(value) {
@@ -489,6 +514,34 @@ app.get('/api/health', async (req, res) => {
   });
 });
 
+app.post('/api/admin/login', (req, res) => {
+  const password = String(req.body.password || '').trim();
+
+  if (!password || password !== ADMIN_PASSWORD) {
+    return res.status(401).json({ error: 'Invalid admin password' });
+  }
+
+  res.setHeader(
+    'Set-Cookie',
+    `${ADMIN_SESSION_COOKIE}=${encodeURIComponent(ADMIN_PASSWORD)}; HttpOnly; Path=/; SameSite=Lax; Max-Age=28800`
+  );
+
+  return res.json({ success: true });
+});
+
+app.post('/api/admin/logout', (req, res) => {
+  res.setHeader(
+    'Set-Cookie',
+    `${ADMIN_SESSION_COOKIE}=; HttpOnly; Path=/; SameSite=Lax; Max-Age=0`
+  );
+
+  return res.json({ success: true });
+});
+
+app.get('/api/admin/session', (req, res) => {
+  res.json({ authenticated: isAdminAuthenticated(req) });
+});
+
 app.get('/api/events', async (req, res) => {
   try {
     const events = await getEvents();
@@ -694,7 +747,7 @@ Current events: ${events.map((event) => `${event.name} on ${event.date}`).join('
   }
 });
 
-app.get('/api/admin/overview', async (req, res) => {
+app.get('/api/admin/overview', requireAdminAuth, async (req, res) => {
   try {
     const overview = await getAdminOverview();
     res.json(overview);
@@ -709,8 +762,20 @@ app.get('/', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
+  if (!isAdminAuthenticated(req)) {
+    return res.sendFile(path.join(__dirname, 'admin-login.html'));
+  }
   res.sendFile(path.join(__dirname, 'admin.html'));
 });
+
+app.get('/admin.html', (req, res) => {
+  if (!isAdminAuthenticated(req)) {
+    return res.sendFile(path.join(__dirname, 'admin-login.html'));
+  }
+  res.sendFile(path.join(__dirname, 'admin.html'));
+});
+
+app.use(express.static(path.join(__dirname, '/')));
 
 seedEvents()
   .then(() => {
