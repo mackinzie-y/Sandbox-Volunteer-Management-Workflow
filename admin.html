@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RiseUp PH Admin</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .admin-shell {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 32px 18px;
+    }
+
+    .admin-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 20px;
+    }
+
+    .admin-card {
+      border-radius: 18px;
+      padding: 18px;
+      background: rgba(255, 252, 247, 0.92);
+      border: 1px solid rgba(31, 42, 31, 0.12);
+      box-shadow: 0 22px 60px rgba(54, 48, 31, 0.12);
+    }
+
+    .admin-card h2 {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .summary-card {
+      border-radius: 16px;
+      padding: 16px;
+      background: rgba(31, 122, 76, 0.08);
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 1.4rem;
+      margin-top: 6px;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .list-item {
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(31, 42, 31, 0.12);
+      padding: 12px;
+    }
+
+    .list-item p {
+      margin: 6px 0 0;
+      color: #5b665b;
+    }
+
+    @media (max-width: 900px) {
+      .admin-grid,
+      .summary-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">RiseUp PH</p>
+        <h1>Admin overview</h1>
+        <p class="hero-text">Quick visibility into volunteer profiles, seeded events, and event sign-ups.</p>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <span class="stat-label">Refresh</span>
+          <button id="refreshBtn" class="primary-button" style="margin-top: 10px;">Reload data</button>
+        </div>
+      </div>
+    </header>
+
+    <div id="summaryRow" class="summary-row"></div>
+    <div id="adminGrid" class="admin-grid"></div>
+  </div>
+
+  <script>
+    const summaryRow = document.getElementById('summaryRow');
+    const adminGrid = document.getElementById('adminGrid');
+    const refreshBtn = document.getElementById('refreshBtn');
+
+    refreshBtn.addEventListener('click', loadOverview);
+    loadOverview();
+
+    async function loadOverview() {
+      summaryRow.innerHTML = '';
+      adminGrid.innerHTML = '<div class="admin-card">Loading overview...</div>';
+
+      try {
+        const response = await fetch('/api/admin/overview');
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to load admin overview');
+        }
+
+        renderSummary(data);
+        renderGrid(data);
+      } catch (error) {
+        adminGrid.innerHTML = '<div class="admin-card">Unable to load admin data.</div>';
+      }
+    }
+
+    function renderSummary(data) {
+      summaryRow.innerHTML = [
+        summaryCard('Volunteer Profiles', data.volunteers.length),
+        summaryCard('Events', data.events.length),
+        summaryCard('Sign-Ups', data.signups.length)
+      ].join('');
+    }
+
+    function summaryCard(label, value) {
+      return `
+        <div class="summary-card">
+          <span>${label}</span>
+          <strong>${value}</strong>
+        </div>
+      `;
+    }
+
+    function renderGrid(data) {
+      adminGrid.innerHTML = [
+        renderColumn('Recent Volunteer Profiles', data.volunteers.slice(0, 5).map((volunteer) => `
+          <div class="list-item">
+            <strong>${volunteer.name}</strong>
+            <p>${volunteer.availability} | ${volunteer.interests.join(', ')}</p>
+            <p>AI role: ${volunteer.aiRecommendation ? volunteer.aiRecommendation.bestRole : 'n/a'}</p>
+          </div>
+        `).join('') || '<div class="list-item">No profiles yet.</div>'),
+        renderColumn('Seeded Events', data.events.map((event) => `
+          <div class="list-item">
+            <strong>${event.name}</strong>
+            <p>${event.date}</p>
+            <p>${event.tags.join(', ')}</p>
+          </div>
+        `).join('')),
+        renderColumn('Recent Sign-Ups', data.signups.slice(0, 5).map((signup) => `
+          <div class="list-item">
+            <strong>${signup.eventName}</strong>
+            <p>User ID: ${signup.userId}</p>
+            <p>${new Date(signup.createdAt).toLocaleString()}</p>
+          </div>
+        `).join('') || '<div class="list-item">No sign-ups yet.</div>')
+      ].join('');
+    }
+
+    function renderColumn(title, content) {
+      return `
+        <section class="admin-card">
+          <h2>${title}</h2>
+          <div class="list">${content}</div>
+        </section>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+{
+  "volunteers": [
+    {
+      "id": "vol_1775131819463_2ya9ff",
+      "name": "Mac",
+      "availability": "weekdays",
+      "interests": [
+        "healthcare"
+      ],
+      "skills": [
+        "public speaking"
+      ],
+      "motivation": "this is my advocacy",
+      "aiRecommendation": {
+        "bestRole": "Community Organizer",
+        "explanation": "Community Organizer fits your weekdays availability, interests in healthcare, and skills in public speaking."
+      },
+      "createdAt": "2026-04-02T12:10:19.462Z"
+    },
+    {
+      "id": "vol_1775131230501_w1co2l",
+      "name": "Welch",
+      "availability": "weekdays",
+      "interests": [
+        "environment"
+      ],
+      "skills": [
+        "organizing"
+      ],
+      "motivation": "I like helpinh ouy",
+      "aiRecommendation": {
+        "bestRole": "Logistics Support",
+        "explanation": "Logistics Support fits your weekdays availability, interests in environment, and skills in organizing."
+      },
+      "createdAt": "2026-04-02T12:00:30.499Z"
+    },
+    {
+      "id": "vol_1775131121716_5dz325",
+      "name": "Mac",
+      "availability": "weekends",
+      "interests": [
+        "environment"
+      ],
+      "skills": [
+        "public speaking"
+      ],
+      "motivation": "jdsjkd",
+      "aiRecommendation": {
+        "bestRole": "Social Media Volunteer",
+        "explanation": "Social Media Volunteer fits your weekends availability, interests in environment, and skills in public speaking."
+      },
+      "createdAt": "2026-04-02T11:58:41.716Z"
+    }
+  ],
+  "events": [
+    {
+      "id": "beach-cleanup",
+      "name": "Beach Cleanup",
+      "description": "Help remove waste from the shoreline and sort collected materials.",
+      "date": "2026-04-12",
+      "time": "8:00 AM - 11:30 AM",
+      "location": "Manila Baywalk, Manila",
+      "tags": [
+        "environment"
+      ]
+    },
+    {
+      "id": "feeding-program",
+      "name": "Feeding Program",
+      "description": "Assist with food packing, distribution, and volunteer coordination.",
+      "date": "2026-04-16",
+      "time": "1:00 PM - 4:00 PM",
+      "location": "Barangay 654 Covered Court, Paco",
+      "tags": [
+        "community",
+        "healthcare"
+      ]
+    },
+    {
+      "id": "donation-drive",
+      "name": "Donation Drive",
+      "description": "Support inventory, pickup scheduling, and donation booth operations.",
+      "date": "2026-04-20",
+      "time": "9:30 AM - 3:00 PM",
+      "location": "RiseUp PH Logistics Hub, Quezon City",
+      "tags": [
+        "logistics"
+      ]
+    },
+    {
+      "id": "tutoring-session",
+      "name": "Tutoring Session",
+      "description": "Guide students through reading and basic learning activities.",
+      "date": "2026-04-24",
+      "time": "3:00 PM - 5:30 PM",
+      "location": "San Andres Learning Center, Manila",
+      "tags": [
+        "education"
+      ]
+    },
+    {
+      "id": "community-health-day",
+      "name": "Community Health Day",
+      "description": "Welcome families, manage queues, and assist partner staff during consultations.",
+      "date": "2026-04-27",
+      "time": "8:30 AM - 2:00 PM",
+      "location": "Tondo Community Clinic, Manila",
+      "tags": [
+        "healthcare",
+        "community"
+      ]
+    }
+  ],
+  "signups": [
+    {
+      "id": "signup_1775131856168_l6r2qp",
+      "userId": "vol_1775131819463_2ya9ff",
+      "eventId": "feeding-program",
+      "eventName": "Feeding Program",
+      "eventDate": "2026-04-16",
+      "eventTime": "1:00 PM - 4:00 PM",
+      "eventLocation": "Barangay 654 Covered Court, Paco",
+      "signupDetails": {
+        "contactNumber": "0905109034",
+        "emergencyContact": "Zoe",
+        "notes": "n/a"
+      },
+      "createdAt": "2026-04-02T12:10:56.167Z"
+    },
+    {
+      "id": "signup_1775131240504_mtgk6p",
+      "userId": "vol_1775131230501_w1co2l",
+      "eventId": "feeding-program",
+      "eventName": "Feeding Program",
+      "createdAt": "2026-04-02T12:00:40.503Z"
+    },
+    {
+      "id": "signup_1775131234033_fdcv84",
+      "userId": "vol_1775131230501_w1co2l",
+      "eventId": "beach-cleanup",
+      "eventName": "Beach Cleanup",
+      "createdAt": "2026-04-02T12:00:34.033Z"
+    },
+    {
+      "id": "signup_1775131164495_cdx8bc",
+      "userId": "vol_1775131121716_5dz325",
+      "eventId": "beach-cleanup",
+      "eventName": "Beach Cleanup",
+      "createdAt": "2026-04-02T11:59:24.495Z"
+    },
+    {
+      "id": "signup_1775131163743_cblhbm",
+      "userId": "vol_1775131121716_5dz325",
+      "eventId": "beach-cleanup",
+      "eventName": "Beach Cleanup",
+      "createdAt": "2026-04-02T11:59:23.743Z"
+    },
+    {
+      "id": "signup_1775131162683_g90n1r",
+      "userId": "vol_1775131121716_5dz325",
+      "eventId": "beach-cleanup",
+      "eventName": "Beach Cleanup",
+      "createdAt": "2026-04-02T11:59:22.683Z"
+    },
+    {
+      "id": "signup_1775131141864_qo7f5t",
+      "userId": "vol_1775131121716_5dz325",
+      "eventId": "community-health-day",
+      "eventName": "Community Health Day",
+      "createdAt": "2026-04-02T11:59:01.864Z"
+    },
+    {
+      "id": "signup_1775131141133_mj9h89",
+      "userId": "vol_1775131121716_5dz325",
+      "eventId": "community-health-day",
+      "eventName": "Community Health Day",
+      "createdAt": "2026-04-02T11:59:01.133Z"
+    },
+    {
+      "id": "signup_1775131136155_40nsuk",
+      "userId": "vol_1775131121716_5dz325",
+      "eventId": "feeding-program",
+      "eventName": "Feeding Program",
+      "createdAt": "2026-04-02T11:58:56.155Z"
+    },
+    {
+      "id": "signup_1775131135505_c77x67",
+      "userId": "vol_1775131121716_5dz325",
+      "eventId": "feeding-program",
+      "eventName": "Feeding Program",
+      "createdAt": "2026-04-02T11:58:55.497Z"
+    },
+    {
+      "id": "signup_1775131134382_p3bwnu",
+      "userId": "vol_1775131121716_5dz325",
+      "eventId": "feeding-program",
+      "eventName": "Feeding Program",
+      "createdAt": "2026-04-02T11:58:54.382Z"
+    }
+  ],
+  "chats": [
+    {
+      "id": "chat_1775131875294_634p9u",
+      "volunteerId": "vol_1775131819463_2ya9ff",
+      "userMessage": "cool",
+      "assistantMessage": "I can help with onboarding, event recommendations, sign-ups, reminders, and updating your availability.",
+      "createdAt": "2026-04-02T12:11:15.293Z"
+    },
+    {
+      "id": "chat_1775131870934_fqyq4t",
+      "volunteerId": "vol_1775131819463_2ya9ff",
+      "userMessage": "what is the best event for me",
+      "assistantMessage": "Current events: Beach Cleanup on 2026-04-12 at Manila Baywalk, Manila, Feeding Program on 2026-04-16 at Barangay 654 Covered Court, Paco, Donation Drive on 2026-04-20 at RiseUp PH Logistics Hub, Quezon City, Tutoring Session on 2026-04-24 at San Andres Learning Center, Manila, Community Health Day on 2026-04-27 at Tondo Community Clinic, Manila.",
+      "createdAt": "2026-04-02T12:11:10.933Z"
+    },
+    {
+      "id": "chat_1775131155291_msup44",
+      "volunteerId": "vol_1775131121716_5dz325",
+      "userMessage": "How do I sign up?",
+      "assistantMessage": "Complete the onboarding form first, then open the events section and click Sign Up on the event you want to join.",
+      "createdAt": "2026-04-02T11:59:15.291Z"
+    },
+    {
+      "id": "chat_1775131148613_df2gyt",
+      "volunteerId": "vol_1775131121716_5dz325",
+      "userMessage": "hi",
+      "assistantMessage": "I can help with onboarding, event recommendations, sign-ups, reminders, and updating your availability.",
+      "createdAt": "2026-04-02T11:59:08.613Z"
+    }
+  ]
+}

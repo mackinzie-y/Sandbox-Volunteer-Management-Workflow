@@ -1,0 +1,16 @@
+{
+  "name": "riseup-ph",
+  "version": "1.0.0",
+  "description": "AI-powered volunteer management MVP for NGOs",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "health": "node test-server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "firebase-admin": "^13.4.0"
+  }
+}
